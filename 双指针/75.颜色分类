@@ -1,1 +1,51 @@
-
+# Method 1:
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        n=len(nums)
+        p0=0  # p0表示p0对应坐标的左边都是0
+        p1=0  # p1表示p1对应坐标的左边都是0&1
+        for i in range(n):
+            if(nums[i]==1):
+                nums[i],nums[p1]=nums[p1],nums[i]
+                p1+=1
+            if(nums[i]==0):
+                nums[i],nums[p0]=nums[p0],nums[i]
+                if(p0<p1): # 当指针i遇到0的时候，p0和p1一起增加。当遇到1的时候只有p1增加，此时p0一定指向1，当把i和p0位置的值互换后，i位置对应的值为1，要与p1位置的值互换
+                    nums[i],nums[p1]=nums[p1],nums[i]
+                p0+=1
+                p1+=1
+        return nums
+        
+# Method 2:
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        n=len(nums)
+        zeros=0  # zeros代表0的个数，数组中坐标zeros及zeros左边都是0
+        ones=0  # one代表1的个数， 数组中坐标ones及ones坐标都是0&1
+        for i in range(n):
+            temp = nums[i]
+            nums[i] = 2
+            if(temp<=1):
+                nums[ones]=1
+                ones+=1
+            if(temp<=0):
+                nums[zeros]=0
+                zeros+=1
+        return nums
+        
+# Method 3:
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        n=len(nums)
+        p0=0
+        p2=n-1
+        i=0
+        while i<=p2:
+            while i<=p2 and nums[i]==2:    # 防止出现[2]的情况下，数组访问越界
+                nums[i],nums[p2]=nums[p2],nums[i]
+                p2-=1
+            if nums[i]==0:
+                nums[i],nums[p0]=nums[p0],nums[i]
+                p0+=1
+            i+=1
+        return nums
