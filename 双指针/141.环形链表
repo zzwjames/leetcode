@@ -1,0 +1,29 @@
+# Method 1:
+# Hash
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        seen=set()
+        while head:
+            if head in seen:
+                return True
+            seen.add(head)
+            head=head.next
+        return False        
+        
+        
+        
+# Method2:
+# fast&slow inference
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if not head or not head.next:
+            return False
+        slow=head
+        fast=head.next
+        while slow!=fast:
+            if not fast or not fast.next:    # avoid overflow
+                return False
+            slow=slow.next
+            fast=fast.next.next
+        return True
