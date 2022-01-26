@@ -1,0 +1,16 @@
+# Method 1
+# double inference
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        n=len(height)
+        l,r=0,n-1
+        ans=0
+        while l<r:
+            area=min(height[l],height[r])*(r-l)
+            ans=max(area,ans)
+            if(height[l]<=height[r]): l+=1
+            else: r-=1
+        return ans
+       
+# area=min(height[l],height[r])*(r-l)
+# that's why we should move the inference which height[inference] is smaller
