@@ -1,0 +1,24 @@
+# Method 1
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        if n==0:
+            return []
+        total_1=[]                # total_1[i]表示n=i时存在的括号组合 例如：total_1=[[None],["()"],["(())","()()"]...]
+        total_1.append([None])    
+        total_1.append(["()"])
+        for i in range(2,n+1):
+            l=[]                                 # l=[]的最终结果是total_1其中的一个项,例如i=2时，l=["(())","()()"]
+            for j in range(i):            
+                now_list1=total_1[j]
+                now_list2=total_1[i-1-j]
+                for k1 in now_list1:
+                    for k2 in now_list2:
+                        if k1==None:
+                            k1=""
+                        if k2==None:
+                            k2=""
+                        el="("+k1+")"+k2
+                        l.append(el)
+            total_1.append(l)
+        return total_1[n]
