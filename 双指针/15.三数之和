@@ -1,0 +1,26 @@
+# Method 1:
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        n=len(nums)
+        nums.sort()                                    # 先排序
+        ans=[]                                         
+        for first in range(n):                         
+            if first>0 and nums[first-1]==nums[first]: # 如果值相同，跳过，减少计算过程
+                continue
+            third=n-1                                  # 要找的是 nums[first],nums[second],nums[thrid], 
+            target=-nums[first]
+            for second in range(first+1,n):                         
+                if second-first>1 and nums[second-1]==nums[second]: # 值相同，跳过，减少计算
+                    continue
+                while second<third and (nums[second]+nums[third]>target): 
+                # 结束循环的情况 
+                # 1)second>=third && nums[second]+nums[third]<=target
+                # 2)second>=third && nums[second]+nums[third]>target
+                # 3)second<third && nums[second]+nums[third]<=target
+                    third-=1                                                             
+                if second>=third:                                     # 题目要求是三个不同的
+                    break
+                if nums[second]+nums[third]==target:
+                    ans.append([nums[first],nums[second],nums[third]])
+        return ans
