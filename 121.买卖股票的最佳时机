@@ -1,0 +1,12 @@
+# Method 1
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        minprice=1e9
+        n=len(prices)
+        ans=0
+        for i in range(n):
+            minprice=min(minprice,prices[i])      # 位置i之前的最小值
+            if(prices[i]>minprice):
+                ans=max(prices[i]-minprice,ans)  # 查看当前最高利润
+        return ans
