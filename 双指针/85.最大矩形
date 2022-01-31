@@ -1,0 +1,37 @@
+# 思路见：https://leetcode-cn.com/problems/maximal-rectangle/solution/zui-da-ju-xing-by-leetcode-solution-bjlu/
+
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        a=[[0]* len(matrix[0]) for i in range (len(matrix))]
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if(matrix[i][j]=="1"):
+                    loc=j
+                    count=1
+                    while loc>0 and matrix[i][loc-1]=="1":
+                        count+=1
+                        loc-=1
+                    a[i][j]=count
+        ans_0=0
+        print(a)
+        for j in range(len(a[0])):
+            left=[0]*len(a)
+            right=[0]*len(a)
+            b=[]
+            ans_1=0
+            for i in range(len(a)):
+                while(b and a[b[-1]][j]>=a[i][j]):
+                    b.pop()
+                left[i]=b[-1] if b else -1
+                b.append(i)
+            b=[]
+            for i in range(len(a)-1,-1,-1):
+                while(b and a[b[-1]][j]>=a[i][j]):
+                    b.pop()
+                right[i]=b[-1] if b else len(a)
+                b.append(i)
+            print(left)
+            for i in range(len(a)):
+                ans_1=max(ans_1,(right[i]-left[i]-1)*a[i][j])
+            ans_0=max(ans_0,ans_1)
+        return ans_0
