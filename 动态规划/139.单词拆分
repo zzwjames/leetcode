@@ -1,0 +1,15 @@
+# Method 1
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        n=len(s)
+        dp=[False]*(n+1)          # dp[i]表示以i结尾的之前的字符可由wordDict中的词组成  0,1,2,....n
+        dp[0]=True                # 初始化
+        for i in range(n):        # 0,1,..n-1
+            for j in range(i+1,n+1):  # i+1,i+2,...n
+                if(dp[i] and s[i:j] in wordDict):
+                    dp[j]=True
+
+        return dp[-1]             # dp[n]
+        
+        
