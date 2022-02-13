@@ -1,0 +1,56 @@
+# Method 1
+# 两两合并
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+
+        ans=None
+        for list in lists:
+            ans=self.mergeTwoLists(ans, list)
+        return ans
+
+    def mergeTwoLists(self,list1: ListNode, list2: ListNode) -> ListNode:
+        a=ListNode(-1)
+        prev=a
+        while(list1 and list2):
+            if(list1.val<list2.val):
+                prev.next=list1
+                list1=list1.next
+            else:
+                prev.next=list2
+                list2=list2.next
+            prev=prev.next
+        prev.next=list1 if list1 else list2
+        return a.next
+        
+        
+# 归并排序
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if not lists:
+            return None
+        n=len(lists)
+        return self.mergesort(lists,0,n-1)
+
+    def mergesort(self, lists: List[Optional[ListNode]], l: int, r: int) -> Optional[ListNode]:
+        if(l==r):
+            return lists[l]
+        mid=(l+r)//2
+        L=self.mergesort(lists,l,mid)          # 合并左边的子序列
+        R=self.mergesort(lists,mid+1,r)        # 合并右边的子序列
+        return self.mergeTwoLists(L,R)         # 返回左右两个子序列合并的结果
+
+    def mergeTwoLists(self,list1: ListNode, list2: ListNode) -> ListNode:
+        a=ListNode(-1)
+        prev=a
+        while(list1 and list2):
+            if(list1.val<list2.val):
+                prev.next=list1
+                list1=list1.next
+            else:
+                prev.next=list2
+                list2=list2.next
+            prev=prev.next
+        prev.next=list1 if list1 else list2
+        return a.next
