@@ -1,0 +1,18 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ans=list()
+        cur=list()
+        def backtrack(cur,left,right):              # 确定好要传的参数
+            if(len(cur)==2*n):                      # 回溯结束条件
+                ans.append(''.join(cur))
+            else:
+                if(left<n):                         # 遍历时判断是否能遍历
+                    cur.append('(')
+                    backtrack(cur,left+1,right)
+                    cur.pop()
+                if(right<left):                     # 因为是遍历，所以是多个if，而不是elif
+                    cur.append(')')
+                    backtrack(cur,left,right+1)
+                    cur.pop()
+        backtrack(cur,0,0)
+        return ans
