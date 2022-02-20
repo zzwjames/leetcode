@@ -1,0 +1,21 @@
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        
+        def backtrack(left,combination,index,j):
+            if(left==0):                                           # 结束条件
+                combinations.append(combination[:])                # [:]
+            else:
+                for i in range(j,len(candidates)):                 # 避免每一层的重复遍历
+                    candidate=candidates[i]
+                    if(left>=candidate):                           # 遍历条件
+                        left=left-candidate
+                        combination.append(candidate)
+                        backtrack(left,combination,index,i)
+                        left=left+candidate             
+                        combination.pop()
+        combinations=[]
+        combination=[]
+        #print(combinations)
+        backtrack(target,combination,0,0)
+        #print(combinations)
+        return combinations
