@@ -1,0 +1,13 @@
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        combinations=list()
+        def backtrack(first):
+            if(first==len(nums)-1):                                  # 结束条件
+                combinations.append(nums[:])           
+            else:                                                         
+                for i in range(first,len(nums)):                     # 每一层遍历
+                    nums[i],nums[first]=nums[first],nums[i]          # 
+                    backtrack(first+1)
+                    nums[i],nums[first]=nums[first],nums[i]
+        backtrack(0)
+        return combinations
