@@ -1,0 +1,19 @@
+class Solution:
+
+    def __init__(self):
+        self.maxSum=float("-inf")
+
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        def maxGain(node):       # 求以当前结点为根节点的最大贡献值
+            if not node:
+                return 0
+            left=max(maxGain(node.left),0)      # 若左子树的贡献值小于0，那么就舍弃
+            right=max(maxGain(node.right),0)    # 若右子树的贡献值小于0，那么就舍弃
+            path=left+right+node.val            # 以当前结点为根节点的最大路径
+            self.maxSum=max(self.maxSum,path)   # 全局变量，相当于遍历所有结点，然后保存以所有结点作为根节点的最大路径
+            
+
+            return node.val+max(left,right)  # 路径中当前根节点只能经过一次，所以最大贡献值由左子树或者右子树贡献
+
+        maxGain(root)
+        return self.maxSum
