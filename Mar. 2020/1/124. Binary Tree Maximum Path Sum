@@ -1,0 +1,18 @@
+class Solution:
+    def __init__(self):
+        self.maxSum=float("-inf")
+
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        
+        def maxGain(node): # 求当前结点的最大贡献
+            if not node:
+                return 0
+            left=max(0,maxGain(node.left))           # 左子树的最大贡献
+            right=max(0,maxGain(node.right))                   # 右子树的最大贡献
+            sum=left+right+node.val
+            self.maxSum=max(self.maxSum,sum)
+
+            return max(left,right)+node.val      # 当前结点最大贡献的路径只能选择其中一个，所以选left和right最大的
+        maxGain(root)
+        
+        return self.maxSum                       
