@@ -1,0 +1,18 @@
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def mybuildTree(preorder_left: int, preorder_right: int, inorder_left: int, inorder_right: int):
+            if(preorder_left>preorder_right or inorder_left>inorder_right):
+                return 
+            inorder_root=index[preorder[preorder_left]]        # 首先取先序遍历的最左边的数，在中序遍历中找到该数的位置
+            node=TreeNode(preorder[preorder_left])    # create the new node
+            left_size=inorder_root-inorder_left       # 计算左子树结点个数
+            left=mybuildTree(preorder_left+1,preorder_left+left_size,inorder_left,inorder_root-1)   #创建左子树
+            right=mybuildTree(preorder_left+left_size+1,preorder_right,inorder_root+1,inorder_right)  #创建右子树
+            node.left=left                        
+            node.right=right
+            return node                         
+
+
+        n=len(preorder)
+        index={element:i for i,element in enumerate(inorder)}    # hash映射
+        return mybuildTree(0,n-1,0,n-1)
