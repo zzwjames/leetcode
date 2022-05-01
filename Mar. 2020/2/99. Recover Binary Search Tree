@@ -1,0 +1,31 @@
+class Solution:
+    def __init__(self):
+        self.first=TreeNode(None)
+        self.second=TreeNode(None)
+        #self.prev=TreeNode(float("-inf")) 
+        self.prev=TreeNode(float("-inf")) 
+
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """        
+
+        def inorder(root):        
+            if(root.left):
+                inorder(root.left)
+     
+            if(root.val<self.prev.val):
+                if(self.first.val==None):
+                    self.first=self.prev
+                    #print(self.first.val)
+                self.second=root
+            #print(root.val)
+            self.prev=root
+            #print(self.prev.val)
+            if(root.right):
+                inorder(root.right)   
+        #prev=TreeNode(float("-inf"))     
+        inorder(root) 
+        temp=self.first.val
+        self.first.val=self.second.val
+        self.second.val=temp
