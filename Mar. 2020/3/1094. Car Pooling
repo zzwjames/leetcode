@@ -1,0 +1,32 @@
+class Solution:
+    def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
+        last_density=0
+        for trip in trips:
+            last_density=max(trip[2],last_density)
+        n=last_density
+        #print(n)
+        dif=[0 for i in range(n+2)]
+        #print(dif)
+        #print(dif)
+        for trip in trips:
+            passenger=trip[0]
+            start=trip[1]
+            end=trip[2]
+
+        #     print(start)
+            dif[start]+=passenger
+            dif[end+1]-=passenger
+
+        answer=[0 for i in range(n+2)]
+
+        answer[0]=dif[0]
+        #print(dif)
+        if(answer[0]>capacity):
+            return False
+        for i in range(1,n+2):
+            answer[i]=answer[i-1]+dif[i]
+            #print(answer[i])
+            if(answer[i]>capacity):
+                return False
+        
+        return True
