@@ -1,0 +1,16 @@
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+
+
+        self.presum=[]
+        self.presum.append(0)
+        for num in nums:
+            n=len(self.presum)
+            self.presum.append(self.presum[n-1]+num)
+        #print(presum)
+
+
+
+    def sumRange(self, left: int, right: int) -> int:
+        return self.presum[right+1]-self.presum[left]
