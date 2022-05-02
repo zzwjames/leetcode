@@ -1,0 +1,13 @@
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        map=defaultdict(int)                 # hashmap
+        map[0]=1
+        presum=0
+        flag=0
+        for num in nums:
+            presum+=num
+            target=presum-k
+            if target in map:
+                flag+=map[target]
+            map[presum]+=1
+        return flag
