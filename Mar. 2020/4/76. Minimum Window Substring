@@ -1,0 +1,52 @@
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if(len(s)<len(t)):
+            return ""
+        
+        # print(len(s))
+        need=defaultdict()                     # 记录需要的字符和字符个数
+        a=t[0]
+        need[a]=1
+        for char in t[1:]:
+            if(char in need.keys()):
+                need[char]+=1
+            else:
+                need[char]=1
+        #print(need)
+        window=defaultdict()                    # 滑动窗口中需要的字符的字符个数
+        left=0
+        right=0
+        val=0
+        start=0
+        length=float("inf")
+     
+        while(right<len(s)):
+            c=s[right]                          # 进入滑动窗口的字符
+            right+=1                            # 移动滑动窗口右端点
+            if(c in need.keys()):               # 如果该字符是需要的
+                if(c in window.keys()):
+                    window[c]+=1
+                else:
+                    window[c]=1
+                
+                if(window[c]==need[c]):         # 如果某个需要的字符在滑动窗口中达到数量要求
+                    val+=1
+                #print(val)
+                #print(window)
+            while(val==len(need)):              # 只要滑动窗口内的字符符合要求就可以继续移动左端点
+                if(right-left<length):          # 更新最小length
+                    start=left
+                    length=right-left
+                d=s[left]                       # 移出滑动窗口左端
+                left+=1
+                #print(left)
+                if(d in need.keys()):           # 如果该字符是需要的，被移除了，更新window
+                    window[d]-=1
+                    if(window[d]<need[d]):
+                        val-=1
+        # print(start)
+        # print(length)
+        if(length>len(s)):
+            return ""
+        #print(right)
+        return s[start:start+length]
