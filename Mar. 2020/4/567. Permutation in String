@@ -53,3 +53,44 @@ class Solution:
             return True
         else:
             return False
+##Method 2:
+一边遍历一边判断
+
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        need=defaultdict()
+        window=defaultdict()
+        for char in s1:
+            if(char in need.keys()):
+                need[char]+=1
+            else:
+                need[char]=1
+        left=0
+        right=0
+        val=0
+        while(right<len(s2)):
+            c=s2[right]
+            right+=1
+            if(c in need.keys()):
+                if(c in window.keys()):
+                    window[c]+=1
+                else:
+                    window[c]=1
+                if(window[c]==need[c]):
+                    val+=1
+        
+
+            while(val==len(need)):             # while left need to continnue
+                if(right-left==len(s1)):
+                        return True
+                d=s2[left]
+                left+=1
+                print(left)
+                print(right)
+                
+                
+                if(d in need.keys()):           # 如果该字符是需要的，被移除了，更新window
+                    window[d]-=1
+                    if(window[d]<need[d]):
+                        val-=1
+        return False
