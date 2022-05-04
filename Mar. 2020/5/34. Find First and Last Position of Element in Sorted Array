@@ -1,3 +1,4 @@
+# Method1: [left,right)
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         n=len(nums)
@@ -6,7 +7,7 @@ class Solution:
 
         left=0
         right=n
-        while(left<right):                      # [left,right)
+        while(left<right):                      # the prerequisite for end the while is left==right
             mid=left+(right-left)//2
             if(nums[mid]==target):
                 right=mid
@@ -14,7 +15,7 @@ class Solution:
                 right=mid
             elif(nums[mid]<target):
                 left=mid+1
-        start=-1 if left>=n or nums[left] != target else left 
+        start=-1 if left>=n or nums[left] != target else left   # 结束前，right指向左边界i，left指向i-1，mid为i-1，随后left指向mid+1，即为i
 
         left=0
         right=n
@@ -28,5 +29,5 @@ class Solution:
                 left=mid+1
         # print(left)
         # print(right)
-        end=-1 if right<0 or nums[left-1] != target else left-1
+        end=-1 if right<0 or nums[left-1] != target else left-1     # 结束前，right指向右边界+1==j+1,left从j-1跳到j+1，结束循环
         return start,end
