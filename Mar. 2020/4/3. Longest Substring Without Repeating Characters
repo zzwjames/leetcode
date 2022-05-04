@@ -1,0 +1,44 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if s==" ":
+            return 1
+        if s=="":
+            return 0
+        window=defaultdict()
+        left=0
+        right=0
+        val=0
+        duplicate=""
+        length=1
+        while(right<len(s)):
+            c=s[right]
+            right+=1
+            #print(right)
+            if(c in window.keys() and window[c]==1):
+                window[c]+=1
+                val=1             # 有重复
+            
+            else:
+                window[c]=1
+            # length=max(length,right-left)
+            
+            while(val==1):
+                #print(window)
+                #print('yes')
+                #print(s[left:right])
+                
+                d=s[left]
+                left+=1
+                if(window[d]==2):
+                    val=0
+                    window[d]=1
+                else:
+                    window[d]-=1
+                #print(window)
+            # print(left)
+            # print(right)
+            # print(s[left:right])
+            length=max(length,right-left)
+        
+                
+        return length
