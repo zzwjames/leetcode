@@ -42,3 +42,27 @@ class Solution:
         
                 
         return length
+
+
+
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        left=0
+        right=0
+        length=0
+        window=defaultdict()
+        while(right<len(s)):
+            c=s[right]
+            right+=1
+            if(c in window.keys()):
+                window[c]+=1
+            else:
+                window[c]=1
+            while(window[c]>=2):
+                d=s[left]
+                left+=1
+                window[d]-=1
+            length=max(length,right-left)
+        return length
