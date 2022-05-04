@@ -1,4 +1,8 @@
-# Method1: [left,right)
+# Method1: 
+[left,right)
+结束条件：left=right
+反推左边界：我们的指针变化策略可以令left=mid=right-1并指向左边界，下一步right=mid=left,指向左边界
+反推右边界：我们的指针变化策略可以令left=i-1,mid=i,right=i+1,i指向右边界，下一步left变为i+i=right，所以left-1指向右边界
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         n=len(nums)
@@ -30,4 +34,42 @@ class Solution:
         # print(left)
         # print(right)
         end=-1 if right<0 or nums[left-1] != target else left-1     # 结束前，right指向右边界+1==j+1,left从j-1跳到j+1，结束循环
+        return start,end
+
+# Method2:
+[left,right]
+结束条件：left=right+1
+反推左边界：我们的指针变化策略可以令left=mid=right并指向左边界，下一步right=mid-1=left-1,最后left指向左边界
+反推右边界：同上
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        n=len(nums)
+        if(n<1):
+            return [-1,-1]
+
+        left=0
+        right=n-1
+        while(left<=right):                      # [left,right]
+            mid=left+(right-left)//2
+            if(nums[mid]==target):
+                right=mid-1
+            elif(nums[mid]>target):
+                right=mid-1
+            elif(nums[mid]<target):
+                left=mid+1
+        start=-1 if left>=n or nums[left] != target else left 
+
+        left=0
+        right=n-1
+        while(left<=right):
+            mid=left+(right-left)//2
+            if(nums[mid]==target):
+                left=mid+1
+            elif(nums[mid]>target):
+                right=mid-1
+            elif(nums[mid]<target):
+                left=mid+1
+        # print(left)
+        # print(right)
+        end=-1 if right<0 or nums[right] != target else right
         return start,end
