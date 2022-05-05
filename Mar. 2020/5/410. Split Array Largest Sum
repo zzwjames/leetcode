@@ -1,0 +1,33 @@
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        left=max(nums)                # 最小值
+        right=sum(nums)               # 最大值
+
+        def split(mid):               # 返回最大数组和，最少需要划分成k组
+            load=0
+            k=0
+            for i in range(len(nums)):
+                if(load+nums[i]==mid):
+                    load=0
+                    k+=1
+                elif(load+nums[i]>mid):
+                    load=nums[i]
+                    k+=1
+                else:
+                    load=load+nums[i]
+            if(load!=0):
+                k+=1
+            return k
+
+
+
+        while(left<=right):
+            mid=left+(right-left)//2
+            #print('split(mid):{}'.format(split(mid)))
+            if(split(mid)==m):
+                right=mid-1
+            elif(split(mid)>m):                # 最少需要划分的组数大于目标数，说明max比目标max小
+                left=mid+1
+            elif(split(mid)<m):
+                right=mid-1
+        return left
