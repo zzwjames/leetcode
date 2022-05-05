@@ -1,0 +1,39 @@
+import math
+class Solution:
+    def shipWithinDays(self, piles: List[int], h: int) -> int:
+        left=max(piles)
+        right=sum(piles)
+
+        def possible(mid):    # mid为可装载量， 返回需要的天数
+            k=0
+            load=0
+            for i in range(len(piles)):
+                #print(load+piles[i])
+                if(load+piles[i]==mid):
+                    k+=1
+                    load=0
+                elif(load+piles[i]>mid):
+                    k+=1
+                    load=piles[i]
+                else:
+                    load=load+piles[i]
+            if(load!=0):
+                k+=1
+            return k
+        
+                
+        while(left<=right):               ## [left,right] 装载量范围
+            mid=left+(right-left)//2         # mid 为当前装载量
+            # print(mid)
+            #print('possible(mid): {}'.format(possible(mid)))
+            
+            if(possible(mid)==h):            # 当前花费的天数==h,因为要找最小的装载量，所以right=mid-1
+                right=mid-1
+                
+            elif(possible(mid)>h):            # 当前需要的天数大于h，那么需要把装载量增大
+                left=mid+1
+            elif(possible(mid)<h):            # 当前需要的天数小于h，那么可以减小装载量
+                right=mid-1
+            # print(left)
+            # print(right)
+        return left
