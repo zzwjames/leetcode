@@ -1,0 +1,31 @@
+import math
+class Solution:
+
+
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        left=1
+        right=max(piles)
+
+        def possible(mid):
+            k=0
+            for pile in piles:
+                k+=math.ceil(pile/mid)
+                #print(k)
+            return k            # 需要的小时数
+
+
+        while(left<=right):               ## [left,right] 速度范围
+            mid=left+(right-left)//2         # mid is 当前每小时吃的香蕉树
+            # print(mid)
+            # print('possible(mid): {}'.format(possible(mid)))
+            if(possible(mid)==h):            # 当前花费的小时数==h,因为要找最小的速度，所以right=mid-1
+                right=mid-1
+                
+            elif(possible(mid)>h):            # 当前需要的小时数大于h，那么需要把速度增大
+                left=mid+1
+            elif(possible(mid)<h):            # 当前需要的小时数小于h，那么可以减小速度
+                right=mid-1
+            # print(left)
+            # print(right)
+        return left
+           
