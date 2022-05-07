@@ -1,0 +1,28 @@
+from queue import PriorityQueue
+class Solution:
+    def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        class nums2_item(object):
+            def __init__(self,index,val):
+                self.val=val
+                self.index=index
+            def __lt__(self, other):
+                return self.val>other.val
+
+        pq=PriorityQueue()
+        for (index,val) in enumerate(nums2):
+            # print(index)
+            # print(val)
+            pq.put(nums2_item(index,val))
+        res=[0 for i in range(len(nums1))]
+        left=0
+        right=len(nums1)-1
+        nums1.sort()              # left->right,由小到大
+        while(not pq.empty()):
+            ele=pq.get()
+            if(nums1[right]>ele.val):
+                res[ele.index]=nums1[right]
+                right-=1
+            else:
+                res[ele.index]=nums1[left]
+                left+=1
+        return res
