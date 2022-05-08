@@ -1,0 +1,30 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+from queue import PriorityQueue
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        pq=PriorityQueue()
+        class list_item(object):
+            def __init__(self,node,val):
+                self.node=node
+                self.val=val
+            def __lt__(self,other):
+                return self.val<other.val
+        for list in lists:
+            #print(list)
+            if(list):                  # 空链表略过
+                pq.put(list_item(list,list.val))        # node,node.val
+        # ele=pq.get()
+        # print(ele.node.next)
+        dummy=ListNode(0)
+        p=dummy
+        while(not pq.empty()):
+            ele=pq.get()           
+            p.next=ele.node
+            if(ele.node.next):
+                pq.put(list_item(ele.node.next,ele.node.next.val))       # 下一个结点存在，再往堆里放
+            p=p.next
+        return dummy.next
