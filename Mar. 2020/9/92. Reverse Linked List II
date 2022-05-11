@@ -1,0 +1,38 @@
+class Solution:
+    # def reverse(head,m):
+    #     pre=None
+    #     cur=head
+    #     while(m):
+    #         next=cur.next
+    #         cur.next=pre
+    #         pre=cur
+    #         cur=next
+    #     m-=1
+    #     return cur,next
+    def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+        def reverse(head,m):
+            pre=None
+            cur=head
+            while(m):
+                
+                next=cur.next
+                cur.next=pre
+                pre=cur
+                
+                cur=next
+                #print(pre)
+                #print(cur)
+                m-=1
+            return pre,cur
+        dummy=ListNode(0)
+        dummy.next=head
+        p=dummy
+        for i in range(left-1):
+            p=p.next
+        #print(p)
+        pre,cur=reverse(p.next,right-left+1)
+        #print(cur)
+        #print(next)
+        p.next.next=cur
+        p.next=pre
+        return dummy.next
