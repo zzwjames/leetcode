@@ -1,0 +1,27 @@
+class MyQueue:
+    def __init__(self):
+        self.instack=[]
+        self.outstack=[]
+
+    def push(self, x: int) -> None:
+        self.instack.append(x)
+
+    def pop(self) -> int:
+        if(self.empty()):
+            return None
+        if(self.outstack):
+            return self.outstack.pop()
+        else:
+            while(self.instack):
+                res=self.instack.pop()
+                self.outstack.append(res)
+            return self.outstack.pop()
+
+    def peek(self) -> int:
+        res=self.pop()
+        self.outstack.append(res)
+        return res
+
+
+    def empty(self) -> bool:
+        return not self.instack and not self.outstack
