@@ -1,0 +1,16 @@
+class Solution:
+    def minAddToMakeValid(self, s: str) -> int:
+        left=0   # 对左括号的需求量
+        right=0  # 对右括号的需求量
+        for char in s:      
+            if(char == '('):
+                right+=1
+            else:
+                right-=1
+                if(right==-1):
+                    left+=1
+                    right=0
+
+        return left+right
+
+
