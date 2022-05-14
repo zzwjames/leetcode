@@ -1,0 +1,19 @@
+class Solution:
+    def minInsertions(self, s: str) -> int:
+        res=0     # 需要插入的
+        right=0
+        for char in s:
+            if(char == '('):
+                right+=2
+                if(right/2%1):    # 一旦右括号多到使right==-1时，程序就会调整，使得当遇到左括号时，右括号的需求量一定是大于等于0的，这个时候如果右括号需求量为奇数，那么添加一个右括号即可
+                    # 插入右括号
+                    res+=1
+                    right-=1
+                    
+            else:
+                right-=1
+                if(right==-1):   # 右括号多了
+                    # 插入左括号
+                    res+=1
+                    right=1
+        return res+right
