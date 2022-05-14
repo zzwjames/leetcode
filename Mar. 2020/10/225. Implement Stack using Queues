@@ -1,0 +1,28 @@
+class MyStack:
+
+    def __init__(self):
+        self.queue=[]
+
+
+    def push(self, x: int) -> None:
+        n=len(self.queue)
+        self.queue.append(x)
+        for i in range(n):
+            self.queue.append(self.queue.pop(0))
+        
+
+    def pop(self) -> int:
+        if(self.empty()):
+            return None
+        return self.queue.pop(0)
+        
+
+
+    def top(self) -> int:
+        if(self.empty()):
+            return None
+        return self.queue[0]
+        
+
+    def empty(self) -> bool:
+        return not self.queue
