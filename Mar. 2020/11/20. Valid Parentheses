@@ -1,0 +1,17 @@
+class Solution:
+    def isValid(self, char: str) -> bool:
+        def hash(s):
+            if(s=='}'):return '{'
+            if(s==')'):return '('
+            return '['
+        stack=[]
+        for s in char:
+            if(s=='(' or s=='{' or s=='['):
+                stack.append(s)
+                #print(stack)
+            else:
+                if(stack and hash(s)==stack.pop()):
+                    continue
+                else:
+                    return False
+        return not stack
